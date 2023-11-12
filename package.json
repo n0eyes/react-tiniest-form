@@ -9,6 +9,7 @@
     "build:dev": "cross-env NODE_ENV=development STRICT_MODE=off webpack --progress --config config/webpack.dev.js",
     "build:sb": "sb build",
     "test-sb": "test-storybook",
+    "test-jest": "jest --watch",
     "prepare": "husky install"
   },
   "dependencies": {
