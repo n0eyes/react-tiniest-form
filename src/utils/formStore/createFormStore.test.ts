@@ -20,4 +20,12 @@ describe('FormStore', () => {
     expect(store.email.value).toBe('seyeon4199@gmail.com');
     expect(store.password.value).toBe('pwd1234');
   });
+
+  test('필드를 등록한다. value가 defaultValue보다 우선한다.', () => {
+    const { store, registerField } = formStore;
+
+    registerField('email', { value: 'noeyes4199@gmail.com' });
+
+    expect(store.email.value).toBe('noeyes4199@gmail.com');
+  });
 });

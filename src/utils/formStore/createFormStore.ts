@@ -34,6 +34,8 @@ type CreateFormsStoreOptions<DefaultValues extends FormFields> = {
   defaultValues: DefaultValues;
 };
 
+type RegisterOptions = Partial<FieldInfo>;
+
 const createFormsStore = <DefaultValues extends FormFields>(
   options?: CreateFormsStoreOptions<DefaultValues>,
 ) => {
@@ -59,11 +61,24 @@ const createFormsStore = <DefaultValues extends FormFields>(
     );
   };
 
+  const registerField = <Name extends FieldName<DefaultValues>>(
+    name: Name,
+    options?: RegisterOptions,
+  ) => {
+    store[name] = {
+      ...store[name],
+      ...options,
+      value: store[name]?.registered ? store[name]?.value : parseToInputValue(options?.value),
+      registered: true,
+    };
+  };
+
   initStore(options?.defaultValues);
 
   return {
     store,
     errors,
+    registerField,
   };
 };
 
