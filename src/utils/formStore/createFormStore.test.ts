@@ -119,4 +119,17 @@ describe('유효성 검사 테스트', () => {
       testValidField('email');
     });
   });
+
+  context('유저가 유효하지 않은 필드를 입력한 경우', () => {
+    it('에러에 필드가 존재하고 onInvalid 콜백 함수가 실행되어야 한다.', () => {
+      const { updateFieldValue } = formStore;
+
+      updateFieldValue('email', { value: 'InvalidEmail' });
+
+      testInvalidField('email', {
+        type: 'email',
+        message: '이메일 형식이 아닙니다!',
+      });
+    });
+  });
 });
