@@ -17,6 +17,10 @@ interface UseFormOptions<DefaultValues extends FormFields> {
   defaultValues?: DefaultValues;
 }
 
+type UseFormReturn<DefaultValues extends FormFields = FormFields> = ReturnType<
+  typeof useForm<DefaultValues>
+>;
+
 const useFormStore = <DefaultValues extends FormFields = FormFields>(
   options?: UseFormOptions<DefaultValues>,
 ) => {
@@ -66,9 +70,7 @@ const useFormStore = <DefaultValues extends FormFields = FormFields>(
   };
 };
 
-export const useForm = <DefaultValues extends FormFields>(
-  options?: UseFormOptions<DefaultValues>,
-) => {
+const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<DefaultValues>) => {
   type Name = FieldName<DefaultValues>;
   type SubmitValue = { [Name in FieldName<DefaultValues>]: string };
   type FormErrors = Errors<DefaultValues>;
@@ -177,3 +179,7 @@ const generateValueAttr = (value: InputValue): string => {
 
   return String(value);
 };
+
+export { useForm };
+
+export type { UseFormReturn };
