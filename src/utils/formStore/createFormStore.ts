@@ -41,6 +41,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
 ) => {
   type FormStore = Store<DefaultValues>;
   type FormErrors = Errors<DefaultValues>;
+  type Name = FieldName<DefaultValues>;
 
   const store: FormStore = {} as FormStore;
   const errors: FormErrors = {} as FormErrors;
@@ -61,10 +62,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     );
   };
 
-  const registerField = <Name extends FieldName<DefaultValues>>(
-    name: Name,
-    options?: MutateOptions,
-  ) => {
+  const registerField = (name: Name, options?: MutateOptions) => {
     store[name] = {
       ...store[name],
       ...options,
@@ -73,14 +71,51 @@ const createFormsStore = <DefaultValues extends FormFields>(
     };
   };
 
-  const updateFieldValue = <Name extends FieldName<DefaultValues>>(
-    name: Name,
-    options?: MutateOptions,
-  ) => {
+  const updateFieldValue = (name: Name, options?: MutateOptions) => {
     store[name] = {
       ...store[name],
       ...options,
     };
+  };
+
+  const setError = (name: Name, validation: ErrorsInfo) => {
+    errors[name] = { ...validation };
+  };
+
+  const deleteError = (name: Name) => {
+    delete errors[name];
+  };
+
+  const validateField = (payload: {
+    name: Name;
+    /**@todo Required or not */
+    onValid?: VoidFunction;
+    onInvalid?: (info: Required<Validation>) => void;
+  }) => {
+    const { name, onInvalid, onValid } = payload;
+
+    const { value } = store[name];
+    const { validations } = store[name];
+
+    const isValid = validations?.every(info => {
+      const { type = '', message = '', validator } = info;
+
+      if (!validator(value)) {
+        setError(name, { type, message });
+        onInvalid?.({ type, message, validator });
+
+        return false;
+      }
+
+      return true;
+    });
+
+    if (isValid) {
+      deleteError(name);
+      onValid?.();
+    }
+
+    return isValid;
   };
 
   initStore(options?.defaultValues);
@@ -90,6 +125,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     errors,
     registerField,
     updateFieldValue,
+    validateField,
   };
 };
 
@@ -102,3 +138,5 @@ const parseToInputValue = (value: InputValue) => {
 };
 
 export { createFormsStore };
+
+export type { FieldName, Validation, ErrorsInfo };

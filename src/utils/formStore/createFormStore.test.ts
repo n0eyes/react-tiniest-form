@@ -1,4 +1,4 @@
-import { createFormsStore } from './createFormStore';
+import { ErrorsInfo, FieldName, Validation, createFormsStore } from './createFormStore';
 
 type DefaultValues = {
   email: string;
@@ -39,5 +39,84 @@ describe('FormStore', () => {
 
     updateFieldValue('email', { value: 'updated4199@gmail.com' });
     expect(store.email.value).toBe('updated4199@gmail.com');
+  });
+});
+
+describe('유효성 검사 테스트', () => {
+  const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const onValid = jest.fn();
+  const onInvalid = jest.fn();
+
+  let formStore: ReturnType<typeof createFormsStore<DefaultValues>>;
+
+  let testValidField: (name: FieldName<DefaultValues>) => void;
+  let testInvalidField: (name: FieldName<DefaultValues>, { type, message }: ErrorsInfo) => void;
+
+  beforeEach(() => {
+    formStore = createFormsStore<DefaultValues>({
+      defaultValues: { email: 'seyeon4199@gmail.com', password: 'pwd1234' },
+    });
+
+    formStore.registerField('email', {
+      value: 'noeyes4199@gmail.com',
+      validations: [
+        {
+          type: 'email',
+          message: '이메일 형식이 아닙니다!',
+          validator: (data: string) => EMAIL_REGEXP.test(data),
+        },
+      ],
+    });
+
+    testValidField = (name: FieldName<DefaultValues>) => {
+      jest.clearAllMocks();
+
+      const { errors, validateField } = formStore;
+
+      const isValid = validateField({
+        name,
+        onValid,
+        onInvalid,
+      });
+
+      expect(isValid).toBe(true);
+      expect(onValid).toBeCalled();
+      expect(onInvalid).not.toBeCalled();
+
+      expect(errors[name]).toBe(undefined);
+    };
+
+    testInvalidField = (
+      name: FieldName<DefaultValues>,
+      { type, message }: Pick<Validation, 'type' | 'message'>,
+    ) => {
+      jest.clearAllMocks();
+
+      const { errors, validateField } = formStore;
+
+      const isValid = validateField({
+        name,
+        onValid,
+        onInvalid,
+      });
+
+      expect(isValid).toBe(false);
+      expect(onValid).not.toBeCalled();
+      expect(onInvalid).toBeCalled();
+
+      expect(errors[name].type).toBe(type);
+      expect(errors[name].message).toBe(message);
+    };
+  });
+
+  context('유저가 유효한 필드를 입력한 경우', () => {
+    it('에러에 필드가 존재하지 않고 onValid 콜백 함수가 실행되어야 한다.', () => {
+      const { updateFieldValue } = formStore;
+
+      updateFieldValue('email', { value: 'noeyes4199@gmail.com' });
+
+      testValidField('email');
+    });
   });
 });
