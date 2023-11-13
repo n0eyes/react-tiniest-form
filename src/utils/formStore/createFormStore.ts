@@ -78,6 +78,10 @@ const createFormsStore = <DefaultValues extends FormFields>(
     };
   };
 
+  const getFieldValue = (name: Name) => {
+    return store[name].value;
+  };
+
   const setError = (name: Name, validation: ErrorsInfo) => {
     errors[name] = { ...validation };
   };
@@ -126,6 +130,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     registerField,
     updateFieldValue,
     validateField,
+    getFieldValue,
   };
 };
 

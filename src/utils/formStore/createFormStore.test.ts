@@ -40,6 +40,14 @@ describe('FormStore', () => {
     updateFieldValue('email', { value: 'updated4199@gmail.com' });
     expect(store.email.value).toBe('updated4199@gmail.com');
   });
+
+  test('필드의 value를 가져온다.', () => {
+    const { getFieldValue } = formStore;
+
+    const value = getFieldValue('email');
+
+    expect(value).toBe('seyeon4199@gmail.com');
+  });
 });
 
 describe('유효성 검사 테스트', () => {
