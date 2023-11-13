@@ -86,6 +86,10 @@ const createFormsStore = <DefaultValues extends FormFields>(
     store[name].watching = true;
   };
 
+  const isWatching = (name: Name) => {
+    return store[name].watching;
+  };
+
   const setError = (name: Name, validation: ErrorsInfo) => {
     errors[name] = { ...validation };
   };
@@ -136,6 +140,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     validateField,
     getFieldValue,
     watchField,
+    isWatching,
   };
 };
 

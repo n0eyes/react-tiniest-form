@@ -56,6 +56,14 @@ describe('FormStore', () => {
 
     expect(store.email.watching).toBe(true);
   });
+
+  test('필드를 watch 여부를 가져온다.', () => {
+    const { isWatching, watchField } = formStore;
+
+    expect(isWatching('email')).toBe(false);
+    watchField('email');
+    expect(isWatching('email')).toBe(true);
+  });
 });
 
 describe('유효성 검사 테스트', () => {
