@@ -47,16 +47,17 @@ const createFormsStore = <DefaultValues extends FormFields>(
   const errors: FormErrors = {} as FormErrors;
 
   const initStore = (defaultValues?: DefaultValues) => {
-    Object.entries(invariantOf(defaultValues)).forEach(([name, value]) => {
-      Object.assign(store, {
-        [name]: {
-          value: parseToInputValue(value),
-          watching: false,
-          registered: false,
-          validations: [],
-        },
+    defaultValues &&
+      Object.entries(invariantOf(defaultValues)).forEach(([name, value]) => {
+        Object.assign(store, {
+          [name]: {
+            value: parseToInputValue(value),
+            watching: false,
+            registered: false,
+            validations: [],
+          },
+        });
       });
-    });
   };
 
   const registerField = (name: Name, options?: MutateOptions) => {
