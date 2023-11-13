@@ -28,4 +28,16 @@ describe('FormStore', () => {
 
     expect(store.email.value).toBe('noeyes4199@gmail.com');
   });
+
+  test('필드를 업데이트한다.', () => {
+    const { store, registerField, updateFieldValue } = formStore;
+
+    expect(store.email.value).toBe('seyeon4199@gmail.com');
+
+    registerField('email', { value: 'noeyes4199@gmail.com' });
+    expect(store.email.value).toBe('noeyes4199@gmail.com');
+
+    updateFieldValue('email', { value: 'updated4199@gmail.com' });
+    expect(store.email.value).toBe('updated4199@gmail.com');
+  });
 });

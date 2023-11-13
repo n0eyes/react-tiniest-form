@@ -34,7 +34,7 @@ type CreateFormsStoreOptions<DefaultValues extends FormFields> = {
   defaultValues: DefaultValues;
 };
 
-type RegisterOptions = Partial<FieldInfo>;
+type MutateOptions = Partial<FieldInfo>;
 
 const createFormsStore = <DefaultValues extends FormFields>(
   options?: CreateFormsStoreOptions<DefaultValues>,
@@ -63,7 +63,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
 
   const registerField = <Name extends FieldName<DefaultValues>>(
     name: Name,
-    options?: RegisterOptions,
+    options?: MutateOptions,
   ) => {
     store[name] = {
       ...store[name],
@@ -73,12 +73,23 @@ const createFormsStore = <DefaultValues extends FormFields>(
     };
   };
 
+  const updateFieldValue = <Name extends FieldName<DefaultValues>>(
+    name: Name,
+    options?: MutateOptions,
+  ) => {
+    store[name] = {
+      ...store[name],
+      ...options,
+    };
+  };
+
   initStore(options?.defaultValues);
 
   return {
     store,
     errors,
     registerField,
+    updateFieldValue,
   };
 };
 
