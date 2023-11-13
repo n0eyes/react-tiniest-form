@@ -109,25 +109,25 @@ const createFormsStore = <DefaultValues extends FormFields>(
     const { value } = store[name];
     const { validations } = store[name];
 
-    const isValid = validations?.every(info => {
+    const isAllValid = validations?.every(info => {
       const { type = '', message = '', validator } = info;
 
-      if (!validator(value)) {
+      const isValid = validator(value);
+
+      if (!isValid) {
         setError(name, { type, message });
         onInvalid?.({ type, message, validator });
-
-        return false;
       }
 
-      return true;
+      return isValid;
     });
 
-    if (isValid) {
+    if (isAllValid) {
       deleteError(name);
       onValid?.();
     }
 
-    return isValid;
+    return isAllValid;
   };
 
   initStore(options?.defaultValues);
