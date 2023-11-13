@@ -48,6 +48,14 @@ describe('FormStore', () => {
 
     expect(value).toBe('seyeon4199@gmail.com');
   });
+
+  test('필드를 watch한다.', () => {
+    const { store, watchField } = formStore;
+
+    watchField('email');
+
+    expect(store.email.watching).toBe(true);
+  });
 });
 
 describe('유효성 검사 테스트', () => {
