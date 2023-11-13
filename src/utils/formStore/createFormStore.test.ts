@@ -1,4 +1,6 @@
-import { ErrorsInfo, FieldName, Validation, createFormsStore } from './createFormStore';
+import { createFormsStore } from './createFormStore';
+
+import type { ErrorsInfo, FieldName, Validation } from './createFormStore';
 
 type DefaultValues = {
   email: string;
