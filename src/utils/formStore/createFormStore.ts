@@ -31,7 +31,7 @@ type Errors<Fields extends FormFields = FormFields> = {
 type ErrorsInfo = Pick<Validation, 'type' | 'message'>;
 
 type CreateFormsStoreOptions<DefaultValues extends FormFields> = {
-  defaultValues: DefaultValues;
+  defaultValues?: DefaultValues;
 };
 
 type MutateOptions = Partial<FieldInfo>;
@@ -47,19 +47,16 @@ const createFormsStore = <DefaultValues extends FormFields>(
   const errors: FormErrors = {} as FormErrors;
 
   const initStore = (defaultValues?: DefaultValues) => {
-    Object.entries(invariantOf(defaultValues)).forEach(
-      /**@todo Valueof  */
-      ([name, value]) => {
-        Object.assign(store, {
-          [name]: {
-            value: parseToInputValue(value),
-            watching: false,
-            registered: false,
-            validations: [],
-          },
-        });
-      },
-    );
+    Object.entries(invariantOf(defaultValues)).forEach(([name, value]) => {
+      Object.assign(store, {
+        [name]: {
+          value: parseToInputValue(value),
+          watching: false,
+          registered: false,
+          validations: [],
+        },
+      });
+    });
   };
 
   const registerField = (name: Name, options?: MutateOptions) => {
@@ -154,4 +151,4 @@ const parseToInputValue = (value: InputValue) => {
 
 export { createFormsStore };
 
-export type { FieldName, Validation, ErrorsInfo };
+export type { FieldName, Validation, ErrorsInfo, FormFields, InputValue, Store, Errors };
