@@ -132,4 +132,23 @@ describe('유효성 검사 테스트', () => {
       });
     });
   });
+
+  context('유저의 입력에 따라 유효성이 변경되는 경우', () => {
+    it('변경되는 즉시 유효성이 검증되어야 한다.', () => {
+      const { updateFieldValue } = formStore;
+
+      // valid => invalid
+      updateFieldValue('email', { value: 'InvalidEmail' });
+
+      testInvalidField('email', {
+        type: 'email',
+        message: '이메일 형식이 아닙니다!',
+      });
+
+      // invalid => valid
+      updateFieldValue('email', { value: 'seyeon4199@gmail.com' });
+
+      testValidField('email');
+    });
+  });
 });
