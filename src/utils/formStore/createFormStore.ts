@@ -77,15 +77,15 @@ const createFormsStore = <DefaultValues extends FormFields>(
   };
 
   const getFieldValue = (name: Name) => {
-    return store[name].value;
+    return parseToInputValue(store[name]?.value);
   };
 
   const watchField = (name: Name) => {
-    store[name].watching = true;
+    store[name] && (store[name].watching = true);
   };
 
   const isWatching = (name: Name) => {
-    return store[name].watching;
+    return store[name] && store[name].watching;
   };
 
   const setError = (name: Name, validation: ErrorsInfo) => {
