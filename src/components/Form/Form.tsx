@@ -96,8 +96,6 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
     Array.from(
       document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[${FIELD_ATTR}]`),
     ).forEach(instance => {
-      console.log('first', getFieldState(name).isValid);
-
       if (instance.name !== autoTab?.to || !getFieldState(name).isValid) return;
 
       if (
