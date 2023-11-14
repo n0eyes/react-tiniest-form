@@ -79,6 +79,7 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
     Element,
     name,
     value,
+    onChange,
     id: idProps,
     validations = [],
     ...restProps
@@ -93,6 +94,7 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
       {...register(name, {
         value,
         validations,
+        onChange,
       })}
       {...restProps}
       {...{ [FIELD_ATTR]: '' }}

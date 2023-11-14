@@ -110,6 +110,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     options?: {
       value?: InputValue;
       validations?: Validation[];
+      onChange?(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void;
     },
   ) => {
     registerField(name, {
@@ -117,7 +118,11 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       validations: options?.validations,
     });
 
-    const onChange = ({ target: { value } }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const {
+        target: { value },
+      } = e;
+
       updateFieldValue(name, { value });
 
       validateField({
@@ -127,6 +132,8 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       });
 
       if (isWatching(name)) takeSnapShot(name, value);
+
+      options?.onChange?.(e);
     };
 
     const ref: RefCallback<HTMLInputElement | HTMLSelectElement> = instance => {
