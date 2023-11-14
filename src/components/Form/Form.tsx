@@ -93,19 +93,24 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
   const { register, getFieldValue, getFieldState } = useFormContext();
 
   const onChange = (e: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLSelectElement>) => {
-    if (e.target instanceof HTMLInputElement) {
-      Array.from(
-        document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[${FIELD_ATTR}]`),
-      ).forEach(instance => {
-        if (
-          instance.name === autoTab?.to &&
-          getFieldValue(name).length === e.target.maxLength &&
-          getFieldState(name).isValid
-        ) {
-          instance.focus();
-        }
-      });
-    }
+    Array.from(
+      document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[${FIELD_ATTR}]`),
+    ).forEach(instance => {
+      console.log('first', getFieldState(name).isValid);
+
+      if (instance.name !== autoTab?.to || !getFieldState(name).isValid) return;
+
+      if (
+        e.target instanceof HTMLInputElement &&
+        getFieldValue(name).length === e.target.maxLength
+      ) {
+        instance.focus();
+      }
+
+      if (e.target instanceof HTMLSelectElement) {
+        instance.focus();
+      }
+    });
 
     onChangeProps?.(e);
   };
