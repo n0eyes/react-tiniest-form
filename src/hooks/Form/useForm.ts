@@ -106,12 +106,22 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     }, {} as any);
   };
 
+  const handleValidation = (name: Name) => {
+    return validateField({
+      name,
+      onValid: () => deleteError(name),
+      onInvalid: ({ type, message }) =>
+        (!errors[name] || errors[name].type !== type) && setError(name, { type, message }),
+    });
+  };
+
   const register = (
     name: Name,
     options?: {
       value?: InputValue;
       validations?: Validation[];
       onChange?(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void;
+      onBlur?(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void;
     },
   ) => {
     const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -121,15 +131,17 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
 
       updateFieldValue(name, { value });
 
-      validateField({
-        name,
-        onValid: () => deleteError(name),
-        onInvalid: ({ type, message }) => !errors[name] && setError(name, { type, message }),
-      });
+      handleValidation(name);
 
       if (isWatching(name)) takeSnapShot(name, value);
 
       options?.onChange?.(e);
+    };
+
+    const onBlur = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      handleValidation(name);
+
+      options?.onBlur?.(e);
     };
 
     const ref: RefCallback<HTMLInputElement | HTMLSelectElement> = instance => {
@@ -148,6 +160,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     return {
       name,
       onChange,
+      onBlur,
       ref,
     };
   };
@@ -167,11 +180,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
         const { ref } = getFieldInfo(name);
 
         /**@todo use store errors */
-        const isValid = validateField({
-          name,
-          onValid: () => deleteError(name),
-          onInvalid: ({ type, message }) => setError(name, { type, message }),
-        });
+        const isValid = handleValidation(name);
 
         if (!isValid) ref?.focus();
 
