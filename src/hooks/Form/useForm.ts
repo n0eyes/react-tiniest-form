@@ -84,6 +84,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       watchField,
       isWatching,
       validateField,
+      getFieldInfo,
     },
     errors,
     setError,
@@ -176,7 +177,13 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     return onSubmit;
   };
 
-  return { store, errors, setError, register, watch, handleSubmit };
+  const getFieldState = (name: Name) => {
+    const { isValid } = getFieldInfo(name);
+
+    return { isValid };
+  };
+
+  return { store, errors, setError, register, watch, handleSubmit, getFieldValue, getFieldState };
 };
 
 const generateValueAttr = (value: InputValue): string => {
