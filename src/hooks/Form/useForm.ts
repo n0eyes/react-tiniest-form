@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, RefCallback, useRef, useState } from 'react';
-import { createFormsStore } from '@/utils/formStore/createFormStore';
+import { createFormsStore, parseToInputValue } from '@/utils/formStore/createFormStore';
 
 import { invariantOf } from '@/utils/@common/invariantOf';
 import { ValueOf } from '@/utils/@common/utility';
@@ -114,11 +114,6 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       onChange?(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void;
     },
   ) => {
-    registerField(name, {
-      value: generateValueAttr(options?.value),
-      validations: options?.validations,
-    });
-
     const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const {
         target: { value },
@@ -140,7 +135,14 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     const ref: RefCallback<HTMLInputElement | HTMLSelectElement> = instance => {
       if (!instance) return;
 
+      /**@todo need? */
       instance.value = getFieldValue(name);
+
+      registerField(name, {
+        value: parseToInputValue(options?.value),
+        validations: options?.validations,
+        ref: instance,
+      });
     };
 
     return {
@@ -160,15 +162,20 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       const formData = new FormData(e.currentTarget);
       const formFields = Object.fromEntries(formData) as SubmitValue;
 
+      /**@todo schema check */
       const isAllValid = Object.keys(invariantOf(formFields)).every(name => {
-        /**@todo schema check */
+        const { ref } = getFieldInfo(name);
 
         /**@todo use store errors */
-        return validateField({
+        const isValid = validateField({
           name,
           onValid: () => deleteError(name),
           onInvalid: ({ type, message }) => setError(name, { type, message }),
         });
+
+        if (!isValid) ref?.focus();
+
+        return isValid;
       });
 
       isAllValid ? onValid?.(formFields, e) : onInvalid?.(errors, e);
@@ -178,20 +185,12 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
   };
 
   const getFieldState = (name: Name) => {
-    const { isValid } = getFieldInfo(name);
+    const { isValid, ref } = getFieldInfo(name);
 
-    return { isValid };
+    return { isValid, ref };
   };
 
   return { store, errors, setError, register, watch, handleSubmit, getFieldValue, getFieldState };
-};
-
-const generateValueAttr = (value: InputValue): string => {
-  if (!value) return '';
-
-  if (Array.isArray(value)) return value.join();
-
-  return String(value);
 };
 
 export { useForm };
