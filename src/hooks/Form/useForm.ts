@@ -86,7 +86,6 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       validateField,
     },
     errors,
-    snapshot,
     setError,
     deleteError,
     takeSnapShot,
@@ -100,7 +99,8 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
 
       return {
         ...acc,
-        [name]: snapshot[name].value,
+        /**@todo snapshot or getFieldValue */
+        [name]: getFieldValue(name),
       };
     }, {} as any);
   };
