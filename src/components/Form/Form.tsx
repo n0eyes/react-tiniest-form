@@ -1,4 +1,4 @@
-import { ElementType, useEffect, useId, useRef } from 'react';
+import { ChangeEvent, ElementType, useEffect, useId, useRef } from 'react';
 
 import createFormContext from '@/context/FormContext/FormContext';
 
@@ -50,7 +50,9 @@ const FieldSet = <T extends ElementType = 'fieldset'>(
   useEffect(() => {
     if (!ref.current) return;
 
-    const fields = Array.from(ref.current.querySelectorAll<HTMLInputElement>(`[${FIELD_ATTR}]`));
+    const fields = Array.from(
+      ref.current.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[${FIELD_ATTR}]`),
+    );
 
     const isAllValid = fields.every(({ name }) => {
       if (errors[name] && !errorFieldSets.has(name)) {
@@ -79,7 +81,8 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
     Element,
     name,
     value,
-    onChange,
+    autoTab,
+    onChange: onChangeProps,
     id: idProps = '',
     validations = [],
     ...restProps
@@ -87,7 +90,25 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
 
   const id = useId() + idProps;
 
-  const { register } = useFormContext();
+  const { register, getFieldValue, getFieldState } = useFormContext();
+
+  const onChange = (e: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLSelectElement>) => {
+    if (e.target instanceof HTMLInputElement) {
+      Array.from(
+        document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[${FIELD_ATTR}]`),
+      ).forEach(instance => {
+        if (
+          instance.name === autoTab?.to &&
+          getFieldValue(name).length === e.target.maxLength &&
+          getFieldState(name).isValid
+        ) {
+          instance.focus();
+        }
+      });
+    }
+
+    onChangeProps?.(e);
+  };
 
   return (
     <Element

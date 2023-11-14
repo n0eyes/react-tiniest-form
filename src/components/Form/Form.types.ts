@@ -24,6 +24,7 @@ interface FieldProps {
   name: string;
   value?: InputValue;
   validations?: Omit<Validation, 'message'>[];
+  autoTab?: { to: string };
 }
 
 interface LabelProps extends ComponentPropsWithoutRef<'label'> {
