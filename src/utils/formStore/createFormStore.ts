@@ -52,14 +52,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     defaultValues &&
       Object.entries(invariantOf(defaultValues)).forEach(([name, value]) => {
         Object.assign(store, {
-          [name]: {
-            value: parseToInputValue(value),
-            watching: false,
-            registered: false,
-            isValid: false,
-            validations: [],
-            ref: null,
-          },
+          [name]: getInitialFieldInfo(value),
         });
       });
   };
@@ -162,6 +155,15 @@ const parseToInputValue = (value: InputValue) => {
 
   return String(value);
 };
+
+const getInitialFieldInfo = (value?: InputValue) => ({
+  value: parseToInputValue(value),
+  watching: false,
+  registered: false,
+  isValid: false,
+  validations: [],
+  ref: null,
+});
 
 export { createFormsStore, parseToInputValue };
 
