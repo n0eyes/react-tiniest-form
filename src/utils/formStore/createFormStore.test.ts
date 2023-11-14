@@ -51,6 +51,30 @@ describe('FormStore', () => {
     expect(value).toBe('seyeon4199@gmail.com');
   });
 
+  test('필드의 정보를 가져온다.', () => {
+    const { getFieldInfo, registerField } = formStore;
+
+    const info = {
+      isValid: false,
+      watching: false,
+      validations: [],
+    };
+
+    expect(getFieldInfo('email')).toEqual({
+      ...info,
+      value: 'seyeon4199@gmail.com',
+      registered: false,
+    });
+
+    registerField('email', { value: 'noeyes4199@gmail.com' });
+
+    expect(getFieldInfo('email')).toEqual({
+      ...info,
+      value: 'noeyes4199@gmail.com',
+      registered: true,
+    });
+  });
+
   test('필드를 watch한다.', () => {
     const { store, watchField } = formStore;
 

@@ -12,6 +12,7 @@ type FieldInfo = {
   value: string;
   watching: boolean;
   validations: Validation[];
+  isValid: boolean;
 };
 
 type Validation = {
@@ -54,6 +55,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
             value: parseToInputValue(value),
             watching: false,
             registered: false,
+            isValid: false,
             validations: [],
           },
         });
@@ -74,6 +76,10 @@ const createFormsStore = <DefaultValues extends FormFields>(
       ...store[name],
       ...options,
     };
+  };
+
+  const getFieldInfo = (name: Name) => {
+    return store[name];
   };
 
   const getFieldValue = (name: Name) => {
@@ -113,6 +119,8 @@ const createFormsStore = <DefaultValues extends FormFields>(
       const isValid = validator(value);
 
       if (!isValid) {
+        store[name].isValid = false;
+
         setError(name, { type, message });
         onInvalid?.({ type, message, validator });
       }
@@ -121,6 +129,8 @@ const createFormsStore = <DefaultValues extends FormFields>(
     });
 
     if (isAllValid) {
+      store[name].isValid = true;
+
       deleteError(name);
       onValid?.();
     }
@@ -139,6 +149,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     getFieldValue,
     watchField,
     isWatching,
+    getFieldInfo,
   };
 };
 
