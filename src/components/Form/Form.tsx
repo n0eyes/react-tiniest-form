@@ -80,7 +80,7 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
     name,
     value,
     onChange,
-    id: idProps,
+    id: idProps = '',
     validations = [],
     ...restProps
   } = getPolymorphicProps('input', props);
