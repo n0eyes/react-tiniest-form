@@ -13,6 +13,7 @@ type FieldInfo = {
   watching: boolean;
   validations: Validation[];
   isValid: boolean;
+  ref: HTMLElement | null;
 };
 
 type Validation = {
@@ -57,6 +58,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
             registered: false,
             isValid: false,
             validations: [],
+            ref: null,
           },
         });
       });
@@ -161,6 +163,6 @@ const parseToInputValue = (value: InputValue) => {
   return String(value);
 };
 
-export { createFormsStore };
+export { createFormsStore, parseToInputValue };
 
 export type { FieldName, Validation, ErrorsInfo, FormFields, InputValue, Store, Errors };

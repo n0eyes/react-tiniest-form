@@ -58,6 +58,7 @@ describe('FormStore', () => {
       isValid: false,
       watching: false,
       validations: [],
+      ref: null,
     };
 
     expect(getFieldInfo('email')).toEqual({
