@@ -2,9 +2,10 @@ import { ChangeEvent, ElementType, useEffect, useId, useRef } from 'react';
 
 import createFormContext from '@/context/FormContext/FormContext';
 
-import { useForm } from '@/hooks/Form/useForm';
+import { UseFormReturn, useForm } from '@/hooks/Form/useForm';
 import { useErrorFieldsSets } from '@/hooks/Form/useErrorFieldSets';
 import { getPolymorphicProps } from '@/utils/@common/polymorphic';
+import { resolveRenderProps } from '@/utils/@common/resolveRenderProps';
 
 import type { PolymorphicProps } from '@/utils/@common/polymorphic';
 import type {
@@ -15,19 +16,22 @@ import type {
   FormProps,
   LabelProps,
 } from './Form.types';
+import type { PropsWithRenderProps } from '@/types/@common/utility';
 
 const { FormProvider, useFormContext } = createFormContext();
 
-const Form = (props: FormProps) => {
+const Form = (props: PropsWithRenderProps<FormProps, UseFormReturn>) => {
   const method = useForm();
   const handleErrorFieldSets = useErrorFieldsSets();
 
   const { children, onValidSubmit, onInValidSubmit, ...restProps } = props;
 
+  const resolvedChildren = resolveRenderProps(children, method);
+
   return (
     <FormProvider value={{ ...method, ...handleErrorFieldSets }}>
       <form onSubmit={method.handleSubmit(onValidSubmit, onInValidSubmit)} {...restProps}>
-        {children}
+        {resolvedChildren}
       </form>
     </FormProvider>
   );

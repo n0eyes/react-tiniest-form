@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, RefCallback, useRef, useState } from 'react';
 import { createFormsStore, parseToInputValue } from '@/utils/formStore/createFormStore';
 
 import { invariantOf } from '@/utils/@common/invariantOf';
-import { ValueOf } from '@/utils/@common/utility';
+import { ValueOf } from '@/types/@common/utility';
 
 import type {
   FieldName,
