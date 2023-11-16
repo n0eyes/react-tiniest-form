@@ -24,7 +24,7 @@ const createCollection = () => {
   const defaultValue = {
     collectionRef: { current: null },
     itemMap: new Map(),
-    getItems: () => [],
+    getItems: (): Element[] => [],
   };
 
   const CollectionContext = createContext<CollectionContext | null>(null);
@@ -73,13 +73,7 @@ const createCollection = () => {
 
       if (!collectionNode) return [];
 
-      const orderedNodes = Array.from(collectionNode.querySelectorAll(`[${ITEM_ATTR}]`));
-      const items = Array.from(context.itemMap.values());
-      const orderedItems = items.sort(
-        (a, b) => orderedNodes.indexOf(a.ref.current!) - orderedNodes.indexOf(b.ref.current!),
-      );
-
-      return orderedItems;
+      return Array.from(collectionNode.querySelectorAll(`[${ITEM_ATTR}]`));
     }, [context.collectionRef, context.itemMap]);
 
     return { ...context, getItems };
