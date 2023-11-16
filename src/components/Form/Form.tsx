@@ -1,4 +1,13 @@
-import { ChangeEvent, ElementType, useEffect, useId, useRef } from 'react';
+import {
+  ChangeEvent,
+  Children,
+  ElementType,
+  PropsWithChildren,
+  isValidElement,
+  useEffect,
+  useId,
+  useRef,
+} from 'react';
 
 import createFormContext from '@/context/FormContext/FormContext';
 
@@ -15,6 +24,7 @@ import type {
   FieldSetProps,
   FormProps,
   LabelProps,
+  PriorityMessage,
 } from './Form.types';
 import type { PropsWithRenderProps } from '@/types/@common/utility';
 
@@ -182,10 +192,27 @@ const FieldMessage = <T extends ElementType = 'div'>(
   return null;
 };
 
+const PriorityMessage = (props: PropsWithChildren<PriorityMessage>) => {
+  const { children, priority } = props;
+
+  const { errors } = useFormContext();
+
+  const errorField = priority.find(name => errors[name]);
+
+  return errorField
+    ? Children.map(children, child => {
+        if (!isValidElement<FieldProps>(child)) return null;
+
+        return child.props.name === errorField ? child : null;
+      })
+    : null;
+};
+
 Form.FieldSet = FieldSet;
 Form.Field = Field;
 Form.Label = Label;
 Form.FieldSetMessage = FieldSetMessage;
 Form.FieldMessage = FieldMessage;
+Form.PriorityMessage = PriorityMessage;
 
 export default Form;

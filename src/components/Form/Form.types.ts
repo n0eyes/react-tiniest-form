@@ -38,6 +38,9 @@ interface MessageProps {
 interface FieldMessageProps extends MessageProps {
   type?: string;
 }
+interface PriorityMessage {
+  priority: string[];
+}
 
 interface FieldSetMessageProps extends MessageProps {}
 
