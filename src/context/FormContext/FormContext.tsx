@@ -1,14 +1,12 @@
-import { useErrorFieldsSets } from '@/hooks/Form/useErrorFieldSets';
 import { useForm } from '@/hooks/Form/useForm';
 
 import type { UseFormReturn } from '@/hooks/Form/useForm';
 import type { FormFields } from '@/utils/formStore/createFormStore';
-import type { UseErrorFieldSets } from '@/hooks/Form/useErrorFieldSets';
 
 import { createContext, PropsWithChildren, useContext } from 'react';
 
 interface FormProviderProps<DefaultValues extends FormFields> {
-  value: UseFormReturn<DefaultValues> & UseErrorFieldSets;
+  value: UseFormReturn<DefaultValues>;
 }
 
 const createFormContext = <DefaultValues extends FormFields>() => {
@@ -18,11 +16,10 @@ const createFormContext = <DefaultValues extends FormFields>() => {
 
   const useFormContext = (): FormContext => {
     const method = useForm<DefaultValues>();
-    const handleErrorFieldSets = useErrorFieldsSets();
 
     const context = useContext(FormContext);
 
-    if (!context) return { ...method, ...handleErrorFieldSets };
+    if (!context) return method;
 
     return context;
   };

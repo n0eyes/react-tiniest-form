@@ -31,24 +31,19 @@ interface LabelProps extends ComponentPropsWithoutRef<'label'> {
   htmlFor: string;
 }
 
-interface MessageProps {
+interface FieldMessageProps {
   name: string;
-}
-
-interface FieldMessageProps extends MessageProps {
   type?: string;
 }
 interface PriorityMessage {
   priority: string[];
 }
 
-interface FieldSetMessageProps extends MessageProps {}
-
 export type {
   FormProps,
   FieldSetProps,
   FieldProps,
   FieldMessageProps,
-  FieldSetMessageProps,
   LabelProps,
+  PriorityMessage,
 };
