@@ -24,8 +24,11 @@ import type {
   PriorityMessage,
 } from './Form.types';
 import type { PropsWithRenderProps } from '@/types/@common/utility';
+import createCollection from '@/context/Collection/Collection';
 
 const { FormProvider, useFormContext } = createFormContext();
+
+const { CollectionProvider, CollectionItem, useCollection } = createCollection();
 
 const Form = (props: PropsWithRenderProps<FormProps, UseFormReturn>) => {
   const method = useForm();
@@ -36,9 +39,11 @@ const Form = (props: PropsWithRenderProps<FormProps, UseFormReturn>) => {
 
   return (
     <FormProvider value={method}>
-      <form onSubmit={method.handleSubmit(onValidSubmit, onInValidSubmit)} {...restProps}>
-        {resolvedChildren}
-      </form>
+      <CollectionProvider>
+        <form onSubmit={method.handleSubmit(onValidSubmit, onInValidSubmit)} {...restProps}>
+          {resolvedChildren}
+        </form>
+      </CollectionProvider>
     </FormProvider>
   );
 };
@@ -61,10 +66,13 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
 
   const { register, getFieldValue, getFieldState } = useFormContext();
 
+  const { getItems } = useCollection();
+
   const onChange = (e: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLSelectElement>) => {
-    Array.from(
-      document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[${FIELD_ATTR}]`),
-    ).forEach(instance => {
+    getItems().forEach(instance => {
+      if (!(instance instanceof HTMLInputElement) && !(instance instanceof HTMLSelectElement))
+        return;
+
       if (instance.name !== autoTab?.to || !getFieldState(name).isValid) return;
 
       if (
@@ -83,16 +91,18 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
   };
 
   return (
-    <Element
-      {...register(name, {
-        value,
-        validations,
-        onChange,
-      })}
-      {...restProps}
-      {...{ [FIELD_ATTR]: '' }}
-      id={id}
-    />
+    <CollectionItem>
+      <Element
+        {...register(name, {
+          value,
+          validations,
+          onChange,
+        })}
+        {...restProps}
+        {...{ [FIELD_ATTR]: '' }}
+        id={id}
+      />
+    </CollectionItem>
   );
 };
 
@@ -101,16 +111,20 @@ const Label = (props: LabelProps) => {
 
   const ref = useRef<HTMLLabelElement>(null);
 
-  useEffect(() => {
-    /**@todo 개별 form 내부의 field만 조회하도록 수정 */
-    const fields = Array.from(document.querySelectorAll<HTMLInputElement>(`[${FIELD_ATTR}]`));
+  const { getItems } = useCollection();
 
-    fields.forEach(({ id, name }) => {
-      if (name === htmlFor && ref.current) {
-        ref.current.htmlFor = id;
+  useEffect(() => {
+    getItems().forEach(instance => {
+      if (!(instance instanceof HTMLInputElement) && !(instance instanceof HTMLSelectElement))
+        return;
+
+      if (!ref.current) return;
+
+      if (instance.name === htmlFor) {
+        ref.current.htmlFor = instance.id;
       }
     });
-  }, []);
+  });
 
   return (
     <label ref={ref} {...restProps}>
@@ -122,7 +136,7 @@ const Label = (props: LabelProps) => {
 const FieldMessage = <T extends ElementType = 'div'>(
   props: PolymorphicProps<T, FieldMessageProps>,
 ) => {
-  const { Element, type, only, children, name, ...restProps } = getPolymorphicProps('div', props);
+  const { Element, type, children, name, ...restProps } = getPolymorphicProps('div', props);
 
   const { errors } = useFormContext();
 
