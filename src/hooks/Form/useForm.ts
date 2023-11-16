@@ -78,6 +78,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
   const {
     store: {
       store,
+      errors,
       registerField,
       getFieldValue,
       updateFieldValue,
@@ -86,7 +87,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       validateField,
       getFieldInfo,
     },
-    errors,
+    errors: errorsSnapshot,
     setError,
     deleteError,
     takeSnapShot,
@@ -111,7 +112,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       name,
       onValid: () => deleteError(name),
       onInvalid: ({ type, message }) =>
-        (!errors[name] || errors[name].type !== type) && setError(name, { type, message }),
+        (!errors[name] || errorsSnapshot[name]?.type !== type) && setError(name, { type, message }),
     });
   };
 
@@ -199,7 +200,16 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     return { isValid, ref };
   };
 
-  return { store, errors, setError, register, watch, handleSubmit, getFieldValue, getFieldState };
+  return {
+    store,
+    errors,
+    setError,
+    register,
+    watch,
+    handleSubmit,
+    getFieldValue,
+    getFieldState,
+  };
 };
 
 export { useForm };
