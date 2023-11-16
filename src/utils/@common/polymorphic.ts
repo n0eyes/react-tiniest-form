@@ -19,7 +19,7 @@ type PolymorphicProps<T extends ElementType, P = {}> = PropsWithTag<
   PropsWithComponentPropsWithoutRef<T, P>
 >;
 
-const getPolymorphicProps = <T extends ElementType, P = {}>(
+const getPolymorphicProps = <T extends ElementType, P>(
   defaultElement: ElementType,
   props: PolymorphicProps<T, P>,
 ) => {
@@ -27,7 +27,7 @@ const getPolymorphicProps = <T extends ElementType, P = {}>(
 
   const Element = as;
 
-  return { Element, ...restProps };
+  return { Element, ...props };
 };
 
 export { getPolymorphicProps };
