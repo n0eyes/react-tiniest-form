@@ -11,19 +11,22 @@ jobs:
   test:
     # Operating System
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.16.1]
+
     # Job steps
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set Node.js 18.16.1
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 18.16.1
-
-      - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
+          node-version: ${{ matrix.node-version }}
+      - name: Install Yarn
+        run: npm install -g yarn@4.0.1
+      - name: Yarn Install
+        run: yarn install
 
         #👇 Adds Chromatic as a step in the workflow
       - uses: chromaui/action@v1
