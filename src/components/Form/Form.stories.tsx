@@ -80,7 +80,7 @@ const JoinStory = () => {
               validations={[
                 validation.required(),
                 validation.passwordRule(),
-                validation.passwordMatch(getFieldValue('password')),
+                validation.passwordMatch(() => getFieldValue('password')),
               ]}
             />
             <Form.FieldMessage name="password-check" type="required" className="FieldMessage">

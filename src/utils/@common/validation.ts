@@ -62,10 +62,10 @@ const validation = {
       validator: (value: string) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
     };
   },
-  passwordMatch(password: string) {
+  passwordMatch(getPassword: () => string) {
     return {
       type: 'passwordMatch',
-      validator: (value: string) => password === value,
+      validator: (value: string) => getPassword() === value,
     };
   },
 };
