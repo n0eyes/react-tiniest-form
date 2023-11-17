@@ -7,7 +7,7 @@ type FormProps = Omit<
   PropsWithComponentPropsWithoutRef<
     'form',
     {
-      /**@todo use type */
+      /** onValidSubmit - Submit이 성공한 경우 실행됩니다. */
       onValidSubmit?: Parameters<UseFormReturn['handleSubmit']>[0];
       onInValidSubmit?: Parameters<UseFormReturn['handleSubmit']>[1];
       schema?: unknown;
