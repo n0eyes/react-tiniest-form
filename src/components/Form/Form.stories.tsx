@@ -32,7 +32,7 @@ const JoinStory = () => {
               className={classNames('Field', errors['email-user'] ? 'InvalidField' : 'ValidField')}
             />
             <Form.FieldMessage name="email-user" type="email" className="FieldMessage">
-              이메일 형식이 아닙디다.
+              올바른 이메일 형식이 아닙니다.
             </Form.FieldMessage>
             <Form.FieldMessage name="email-user" type="required" className="FieldMessage">
               이메일은 필수입니다.
@@ -46,7 +46,7 @@ const JoinStory = () => {
               비밀번호
             </Form.Label>
             <div className={classNames('PasswordRules')}>
-              영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+              영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해 주세요.
             </div>
             <Form.Field
               name="password"
