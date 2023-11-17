@@ -7,7 +7,6 @@ type FormProps = Omit<
   PropsWithComponentPropsWithoutRef<
     'form',
     {
-      /** onValidSubmit - Submit이 성공한 경우 실행됩니다. */
       onValidSubmit?: Parameters<UseFormReturn['handleSubmit']>[0];
       onInValidSubmit?: Parameters<UseFormReturn['handleSubmit']>[1];
       schema?: unknown;
@@ -16,12 +15,9 @@ type FormProps = Omit<
   'onSubmit'
 >;
 
-interface FieldSetProps {
-  name: string;
-}
-
 interface FieldProps {
   name: string;
+  /**@todo defaultValue or value */
   value?: InputValue;
   validations?: Omit<Validation, 'message'>[];
   autoTab?: { to: string };
@@ -39,11 +35,4 @@ interface PriorityMessage {
   priority: string[];
 }
 
-export type {
-  FormProps,
-  FieldSetProps,
-  FieldProps,
-  FieldMessageProps,
-  LabelProps,
-  PriorityMessage,
-};
+export type { FormProps, FieldProps, FieldMessageProps, LabelProps, PriorityMessage };

@@ -1,4 +1,6 @@
-import type { Meta } from '@storybook/react';
+import { within, userEvent } from '@storybook/testing-library';
+
+import type { Meta, Story } from '@storybook/react';
 
 import Form from './Form';
 import classNames from 'classnames';
@@ -9,11 +11,9 @@ import { validation } from '@/utils/@common/validation';
 export default {
   title: 'Components/Form',
   component: Form,
-  tags: ['autodocs'],
-  argTypes: {},
 } satisfies Meta<typeof Form>;
 
-export const Join = () => {
+const JoinStory = () => {
   return (
     <Form onValidSubmit={data => alert('가입 성공!\n' + JSON.stringify(data))}>
       {({ getFieldValue, errors }) => (
@@ -153,7 +153,7 @@ export const Join = () => {
   );
 };
 
-export const AuthTabs = () => (
+const AuthTabsStory = () => (
   <Form onValidSubmit={data => alert('제출 성공!\n' + JSON.stringify(data))}>
     {({ errors }) => (
       <>
@@ -215,3 +215,35 @@ export const AuthTabs = () => (
     )}
   </Form>
 );
+
+export const Join: Story = args => <JoinStory {...args} />;
+
+Join.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  await userEvent.type(canvas.getByPlaceholderText('이메일'), 'invalid.com', { delay: 100 });
+
+  await userEvent.type(canvas.getByPlaceholderText('비밀번호'), 'Password123', { delay: 100 });
+
+  await userEvent.type(canvas.getByPlaceholderText('비밀번호 확인'), 'Password123', {
+    delay: 100,
+  });
+
+  await userEvent.type(canvas.getByPlaceholderText('1997'), '1997', { delay: 100 });
+  await userEvent.type(canvas.getByPlaceholderText('03'), '03', { delay: 100 });
+  await userEvent.type(canvas.getByPlaceholderText('24'), '24', { delay: 100 });
+
+  userEvent.click(canvas.getByText('가입하기'));
+};
+
+export const AuthTabs: Story = args => <AuthTabsStory {...args} />;
+
+AuthTabs.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  await userEvent.type(canvas.getByPlaceholderText('1997'), '1997', { delay: 100 });
+  await userEvent.type(canvas.getByPlaceholderText('03'), '03', { delay: 100 });
+  await userEvent.type(canvas.getByPlaceholderText('24'), '24', { delay: 100 });
+
+  await userEvent.click(canvas.getByRole('button', { name: '제출하기' }));
+};
