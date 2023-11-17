@@ -13,11 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     # Job steps
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Yarn
-        run: |
-          npm install -g yarn@4.0.1
-          yarn install
+      - uses: actions/checkout@v3
+
+      - name: Set Node.js 18.16.1
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.1
+
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install # will run `yarn install` command
+
         #👇 Adds Chromatic as a step in the workflow
       - uses: chromaui/action@v1
         # Options required for Chromatic's GitHub Action
