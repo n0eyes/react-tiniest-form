@@ -154,13 +154,15 @@ const PriorityMessage = (props: PropsWithChildren<PriorityMessage>) => {
 
   const errorField = priority.find(name => errors[name]);
 
-  return errorField
-    ? Children.map(children, child => {
+  return errorField ? (
+    <>
+      {Children.map(children, child => {
         if (!isValidElement<FieldProps>(child)) return null;
 
         return child.props.name === errorField ? child : null;
-      })
-    : null;
+      })}
+    </>
+  ) : null;
 };
 
 Form.Field = Field;
