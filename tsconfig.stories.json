@@ -3,5 +3,5 @@
     "declaration": true
   },
   "extends": "./tsconfig.json",
-  "exclude": ["src/**/*.stories.{ts,tsx}", ".storybook"]
+  "exclude": ["src/**/*.stories.*", ".storybook"]
 }

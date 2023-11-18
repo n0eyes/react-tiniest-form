@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "declaration": true,
-    "outDir": "./lib",
+    "outDir": "./dist",
     "noEmitOnError": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,

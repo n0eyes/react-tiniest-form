@@ -9610,7 +9610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^11.0.1, globby@npm:^11.0.2, globby@npm:^11.1.0":
+"globby@npm:^11.0.1, globby@npm:^11.0.2, globby@npm:^11.0.4, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
   dependencies:
@@ -12729,6 +12729,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mylas@npm:^2.1.9":
+  version: 2.1.13
+  resolution: "mylas@npm:2.1.13"
+  checksum: 093dfaf88f444d9da956c68a61ddcfe05ab9411c0024b0c7f4d721639ba7d311ea8f9c052ce617344e67d40982f67614cd634b525b923048bf9a191234968c9c
+  languageName: node
+  linkType: hard
+
 "nanoid@npm:^3.3.6":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
@@ -13552,6 +13559,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"plimit-lit@npm:^1.2.6":
+  version: 1.6.1
+  resolution: "plimit-lit@npm:1.6.1"
+  dependencies:
+    queue-lit: "npm:^1.5.1"
+  checksum: af5d351bb55afe1eaa84b27c2b329699e150e4cf70464f3d474f5eabe9bdb9f48ed378ada1498d3b893f68ee7da2423ba6d9a4d88b1429d3b0aea22afcf5292b
+  languageName: node
+  linkType: hard
+
 "pnp-webpack-plugin@npm:^1.7.0":
   version: 1.7.0
   resolution: "pnp-webpack-plugin@npm:1.7.0"
@@ -13929,6 +13945,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"queue-lit@npm:^1.5.1":
+  version: 1.5.2
+  resolution: "queue-lit@npm:1.5.2"
+  checksum: 8aa838b2c939aeaa6cd272b5b6b172379a3fa1d9193b2a3e687643c68c0efee3cd3493af4f1f8a11ff79b8207e4d00cc5d0b072f6e4bbeaaa27ee01f567ec4ac
+  languageName: node
+  linkType: hard
+
 "queue-microtask@npm:^1.2.2":
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
@@ -14138,6 +14161,80 @@ __metadata:
   checksum: 6d66f3bdb65e1ec79089f80314da97c9a005087a04ee034255a5de129a4c0d9fd0bf99fa7bf642781ac2dc745ca687aae3de082bd8afdd0d117bc953241e15ad
   languageName: node
   linkType: hard
+
+"react-tiniest-form@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "react-tiniest-form@workspace:."
+  dependencies:
+    "@babel/core": "npm:^7.23.3"
+    "@babel/preset-env": "npm:^7.22.9"
+    "@babel/preset-react": "npm:^7.22.5"
+    "@babel/preset-typescript": "npm:^7.22.5"
+    "@storybook/addon-essentials": "npm:^7.0.24"
+    "@storybook/addon-interactions": "npm:^7.0.26"
+    "@storybook/addon-links": "npm:^7.0.24"
+    "@storybook/blocks": "npm:^7.0.24"
+    "@storybook/global": "npm:^5.0.0"
+    "@storybook/jest": "npm:^0.1.0"
+    "@storybook/preset-create-react-app": "npm:^7.0.24"
+    "@storybook/react": "npm:^7.0.24"
+    "@storybook/react-webpack5": "npm:^7.0.24"
+    "@storybook/test-runner": "npm:^0.13.0"
+    "@storybook/testing-library": "npm:^0.2.0"
+    "@testing-library/dom": "npm:^9.3.1"
+    "@testing-library/jest-dom": "npm:^5.16.5"
+    "@testing-library/react": "npm:^14.0.0"
+    "@testing-library/user-event": "npm:^14.4.3"
+    "@types/babel__core": "npm:^7"
+    "@types/babel__preset-env": "npm:^7"
+    "@types/jest-plugin-context": "npm:^2"
+    "@types/node": "npm:^20.4.2"
+    "@types/prettier": "npm:^2"
+    "@types/react": "npm:^18"
+    "@types/react-dom": "npm:^18"
+    "@types/testing-library__jest-dom": "npm:^5.14.8"
+    "@typescript-eslint/eslint-plugin": "npm:latest"
+    "@typescript-eslint/parser": "npm:latest"
+    babel-loader: "npm:^9.1.3"
+    babel-preset-react-app: "npm:^10.0.1"
+    chromatic: "npm:^9.0.0"
+    classnames: "npm:^2.3.2"
+    cross-env: "npm:^7.0.3"
+    css-loader: "npm:^6.8.1"
+    eslint: "npm:^8.44.0"
+    eslint-config-airbnb: "npm:^19.0.4"
+    eslint-plugin-import: "npm:^2.27.5"
+    eslint-plugin-jsx-a11y: "npm:^6.7.1"
+    eslint-plugin-prettier: "npm:^5.0.0"
+    eslint-plugin-react: "npm:latest"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-simple-import-sort: "npm:^10.0.0"
+    fork-ts-checker-webpack-plugin: "npm:^8.0.0"
+    husky: "npm:>=7"
+    jest: "npm:^29.7.0"
+    jest-playwright-preset: "npm:^3.0.1"
+    jest-plugin-context: "npm:^2.9.0"
+    lint-staged: "npm:>=10"
+    playwright: "npm:^1.39.0"
+    postcss: "npm:^8.4.31"
+    postcss-styled-syntax: "npm:^0.5.0"
+    prettier: "npm:2.8.8"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    storybook: "npm:^7.0.24"
+    style-loader: "npm:^3.3.3"
+    stylelint: "npm:^15.10.1"
+    stylelint-config-clean-order: "npm:^5.0.1"
+    stylelint-config-standard: "npm:^34.0.0"
+    terser-webpack-plugin: "npm:^5.3.9"
+    tsc-alias: "npm:^1.8.8"
+    typescript: "npm:^5.1.6"
+    webpack: "npm:^5.88.1"
+    webpack-cli: "npm:^5.1.4"
+    webpack-dev-server: "npm:^4.15.1"
+    webpack-merge: "npm:^5.9.0"
+  languageName: unknown
+  linkType: soft
 
 "react@npm:^18.2.0":
   version: 18.2.0
@@ -14625,79 +14722,6 @@ __metadata:
   checksum: f1e646f8c567795f2916aef7aadf685b543da6b9a53e482bb04b07472c7eef2b476045ba1e29f401c301c66b630b22b815ab31fdd60c5e1ae6566ff523debf45
   languageName: node
   linkType: hard
-
-"root-workspace-0b6124@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "root-workspace-0b6124@workspace:."
-  dependencies:
-    "@babel/core": "npm:^7.23.3"
-    "@babel/preset-env": "npm:^7.22.9"
-    "@babel/preset-react": "npm:^7.22.5"
-    "@babel/preset-typescript": "npm:^7.22.5"
-    "@storybook/addon-essentials": "npm:^7.0.24"
-    "@storybook/addon-interactions": "npm:^7.0.26"
-    "@storybook/addon-links": "npm:^7.0.24"
-    "@storybook/blocks": "npm:^7.0.24"
-    "@storybook/global": "npm:^5.0.0"
-    "@storybook/jest": "npm:^0.1.0"
-    "@storybook/preset-create-react-app": "npm:^7.0.24"
-    "@storybook/react": "npm:^7.0.24"
-    "@storybook/react-webpack5": "npm:^7.0.24"
-    "@storybook/test-runner": "npm:^0.13.0"
-    "@storybook/testing-library": "npm:^0.2.0"
-    "@testing-library/dom": "npm:^9.3.1"
-    "@testing-library/jest-dom": "npm:^5.16.5"
-    "@testing-library/react": "npm:^14.0.0"
-    "@testing-library/user-event": "npm:^14.4.3"
-    "@types/babel__core": "npm:^7"
-    "@types/babel__preset-env": "npm:^7"
-    "@types/jest-plugin-context": "npm:^2"
-    "@types/node": "npm:^20.4.2"
-    "@types/prettier": "npm:^2"
-    "@types/react": "npm:^18"
-    "@types/react-dom": "npm:^18"
-    "@types/testing-library__jest-dom": "npm:^5.14.8"
-    "@typescript-eslint/eslint-plugin": "npm:latest"
-    "@typescript-eslint/parser": "npm:latest"
-    babel-loader: "npm:^9.1.3"
-    babel-preset-react-app: "npm:^10.0.1"
-    chromatic: "npm:^9.0.0"
-    classnames: "npm:^2.3.2"
-    cross-env: "npm:^7.0.3"
-    css-loader: "npm:^6.8.1"
-    eslint: "npm:^8.44.0"
-    eslint-config-airbnb: "npm:^19.0.4"
-    eslint-plugin-import: "npm:^2.27.5"
-    eslint-plugin-jsx-a11y: "npm:^6.7.1"
-    eslint-plugin-prettier: "npm:^5.0.0"
-    eslint-plugin-react: "npm:latest"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-simple-import-sort: "npm:^10.0.0"
-    fork-ts-checker-webpack-plugin: "npm:^8.0.0"
-    husky: "npm:>=7"
-    jest: "npm:^29.7.0"
-    jest-playwright-preset: "npm:^3.0.1"
-    jest-plugin-context: "npm:^2.9.0"
-    lint-staged: "npm:>=10"
-    playwright: "npm:^1.39.0"
-    postcss: "npm:^8.4.31"
-    postcss-styled-syntax: "npm:^0.5.0"
-    prettier: "npm:2.8.8"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    storybook: "npm:^7.0.24"
-    style-loader: "npm:^3.3.3"
-    stylelint: "npm:^15.10.1"
-    stylelint-config-clean-order: "npm:^5.0.1"
-    stylelint-config-standard: "npm:^34.0.0"
-    terser-webpack-plugin: "npm:^5.3.9"
-    typescript: "npm:^5.1.6"
-    webpack: "npm:^5.88.1"
-    webpack-cli: "npm:^5.1.4"
-    webpack-dev-server: "npm:^4.15.1"
-    webpack-merge: "npm:^5.9.0"
-  languageName: unknown
-  linkType: soft
 
 "run-applescript@npm:^5.0.0":
   version: 5.0.0
@@ -15972,6 +15996,22 @@ __metadata:
     typescript:
       optional: true
   checksum: ff32b4f810f9d99f676d70fe2c0e327cb6c812214bd4fc7135870b039f9e85a85b2c20f8fe030d9bd36e9598a12faa391f10aecb95df624b92f1af6bd47dc397
+  languageName: node
+  linkType: hard
+
+"tsc-alias@npm:^1.8.8":
+  version: 1.8.8
+  resolution: "tsc-alias@npm:1.8.8"
+  dependencies:
+    chokidar: "npm:^3.5.3"
+    commander: "npm:^9.0.0"
+    globby: "npm:^11.0.4"
+    mylas: "npm:^2.1.9"
+    normalize-path: "npm:^3.0.0"
+    plimit-lit: "npm:^1.2.6"
+  bin:
+    tsc-alias: dist/bin/index.js
+  checksum: 02d0e3309f5b4d5c2dfc09ddb1192faa75108025e37d51f85dd7cfaab1ebe69cd50a6ed17d2e5d692ddc406455c1b17dfc056ca6ac56f587cba7b63993de251c
   languageName: node
   linkType: hard
 
