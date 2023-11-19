@@ -153,7 +153,7 @@ const JoinStory = () => {
   );
 };
 
-const AuthTabsStory = () => (
+const AutoTabsStory = () => (
   <Form onValidSubmit={data => alert('제출 성공!\n' + JSON.stringify(data))}>
     {({ errors }) => (
       <>
@@ -236,9 +236,9 @@ Join.play = async ({ canvasElement }) => {
   userEvent.click(canvas.getByText('가입하기'));
 };
 
-export const AuthTabs: Story = args => <AuthTabsStory {...args} />;
+export const AutoTabs: Story = args => <AutoTabsStory {...args} />;
 
-AuthTabs.play = async ({ canvasElement }) => {
+AutoTabs.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
   await userEvent.type(canvas.getByPlaceholderText('1997'), '1997', { delay: 100 });
