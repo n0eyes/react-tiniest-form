@@ -13,8 +13,7 @@ type FieldInfo = {
   watching: boolean;
   validations: Validation[];
   isValid: boolean;
-  /**@todo HTMLInputElement | HTMLSelectElement */
-  ref: HTMLElement | null;
+  ref: HTMLInputElement | HTMLSelectElement | null;
 };
 
 type Validation = {

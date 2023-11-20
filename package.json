@@ -22,6 +22,9 @@
   },
   "homepage": "https://github.com/n0eyes/react-tiniest-form#readme",
   "license": "MIT",
+  "workspaces": [
+    "website"
+  ],
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn type-check --watch",

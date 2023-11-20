@@ -1,0 +1,170 @@
+---
+sidebar_position: 1
+---
+
+# useForm
+
+- form을 조작할 수 있는 다양한 기능을 제공하는 hook입니다.
+- Form 컴포넌트 내부의 뼈대이므로 편의에 따라 다양하게 활용할 수 있습니다.
+
+## useForm
+
+<code>(options?) => UseFormReturn</code>
+
+<br />
+<br />
+
+- <PropsHighlight>options?: object</PropsHighlight>
+
+  - <PropsHighlight>defaultValues: \{
+[name: string]: string \| number \| ReadonlyArray\<string\> \| undefined
+\}</PropsHighlight> - field들의 default value입니다.
+
+## UseFormReturn
+
+### store
+
+<code>\{ [name:string]: FieldInfo \}</code>
+
+<br />
+<br />
+
+field의 정보가 저장됩니다. `onChange`, `onBlur` 이벤트가 발생하는 경우 갱신됩니다.
+
+**return**
+
+- <PropsHighlight>FieldInfo: object</PropsHighlight>
+
+  - <PropsHighlight>value: string</PropsHighlight> - field의 value입니다.
+  - <PropsHighlight>registered: boolean</PropsHighlight> - 현재 field의 등록 여부를 반환합니다.
+  - <PropsHighlight>watching: boolean</PropsHighlight> - 현재 field의 구독 여부를 반환합니다.
+  - <PropsHighlight>isValid: boolean</PropsHighlight> - 현재 field의 유효 여부를 반환합니다. 모든 유효성
+    검사를 통과하면 `true`가 됩니다.
+  - <PropsHighlight>validations: \{ type?:string, message?:string, validator?: (value:string)=>boolean \}[]</PropsHighlight> - 현재 field에 등록된 유효성 검사 배열입니다.
+  - <PropsHighlight>ref: HTMLInputElement | HTMLSelectElement | null</PropsHighlight> - 등록된 field의
+    ref입니다.
+
+### errors
+
+<code>\{ [name:string]: ErrorsInfo \}</code>
+
+<br />
+<br />
+
+**return**
+
+- <PropsHighlight>FieldInfo: object</PropsHighlight>
+
+  - <PropsHighlight>type?: string</PropsHighlight> - 에러의 type입니다.
+  - <PropsHighlight>message?: string</PropsHighlight> - 에러의 message입니다.
+
+### register
+
+<code>(name: string, options?) => (\{ onChange, onBlur, name, ref \})</code>
+
+<br />
+<br />
+
+**props**
+
+- <PropsHighlight>name: string</PropsHighlight> - field의 이름입니다.
+- <PropsHighlight>options?: object</PropsHighlight>
+
+  - <PropsHighlight>value: string \| number \| ReadonlyArray\<string\> \| undefined</PropsHighlight> - field의 value입니다.
+
+  - <PropsHighlight>onChange: (e: ChangeEvent\<HTMLInputElement \| HTMLSelectElement\>) => void</PropsHighlight> - field의 change event를 구독합니다.
+  - <PropsHighlight>onBlur: (e: ChangeEvent\<HTMLInputElement \| HTMLSelectElement\>) => void</PropsHighlight> - field의 blur event를 구독합니다.
+  - <PropsHighlight>validations: \{ type?:string, message?:string, validator?: (value:string)=>boolean \}[]</PropsHighlight> - field의 유효성 검사 배열입니다. `onChange`, `onBlur` 이벤트가 발생하는 경우 유효성 검사가 순차적으로 이루어집니다.
+
+**return**
+
+- <PropsHighlight>value: string \| number \| ReadonlyArray\<string\> \| undefined</PropsHighlight> - field의 value입니다.
+- <PropsHighlight>onChange: (e: ChangeEvent\<HTMLInputElement \| HTMLSelectElement\>) => void</PropsHighlight> - field의 change event를 구독합니다.
+- <PropsHighlight>onBlur: (e: ChangeEvent\<HTMLInputElement \| HTMLSelectElement\>) => void</PropsHighlight> - field의 blur event를 구독합니다.
+- <PropsHighlight>ref: RefCallback\<HTMLInputElement \| HTMLSelectElement\></PropsHighlight> - 내부적인 조작을 위한 field의 ref입니다.
+
+### watch
+
+<code>(fieldsNames: string[]) => (\{ [name:string]: string \})</code>
+
+<br />
+<br />
+
+특정 필드를 구독합니다. 해당 필드는 **Controlled Field**로 동작합니다.
+
+**props**
+
+- <PropsHighlight>fieldNames: string[]</PropsHighlight> - 구독할 field들의 이름입니다.
+
+**return**
+
+- <PropsHighlight>\{ [name:string]: string \}</PropsHighlight> - 구독한 field들의 value가 반환됩니다.
+
+### setError
+
+<code>(name: string, info?) => void</code>
+
+<br />
+<br />
+
+field의 에러를 설정합니다.
+
+**props**
+
+- <PropsHighlight>name: string</PropsHighlight> - 에러를 설정할 field의 이름입니다.
+
+- <PropsHighlight>info?: object</PropsHighlight>
+
+  - <PropsHighlight>type?: string</PropsHighlight> - 설정할 에러의 type입니다.
+  - <PropsHighlight>message?: string</PropsHighlight> - 설정할 에러의 message입니다.
+
+### handleSubmit
+
+<code>(onValid?: OnValid, onInvalid?: OnInvalid) => ChangeEventHandler\<HTMLFormElement\></code>
+
+<br />
+<br />
+
+유효성 검사 여부에 따라 실행될 두 개의 콜백 함수를 인자로 받는 함수입니다.
+
+**props**
+
+- <PropsHighlight>onValid?: (value: SubmitValue, e: FormEvent\<HTMLFormElement\>) => void</PropsHighlight> - 모든 field가 유효성 검사를 통과하는 경우 실행됩니다.
+
+- <PropsHighlight>onValid?: (value: FormErrors, e: FormEvent\<HTMLFormElement\>) => void</PropsHighlight> - 최소 한 개의 field가 유효성 검사를 통과하지 못하는 경우 실행됩니다.
+
+### getFieldValue
+
+<code>(name: string) => string</code>
+
+<br />
+<br />
+
+field의 value를 반환합니다.
+
+**props**
+
+- <PropsHighlight>name: string</PropsHighlight> - value를 반환할 field의 이름입니다.
+
+### getFieldState
+
+<code>(name: string) => \{ isValid: boolean, ref: HTMLInputElement | HTMLSelectElement | null \} \| undefined</code>
+
+<br />
+<br />
+
+field의 state를 반환합니다.
+
+- <PropsHighlight>isValid: boolean</PropsHighlight> - field의 유효 여부입니다.
+- <PropsHighlight>ref: HTMLInputElement | HTMLSelectElement | null</PropsHighlight> - 등록된 field의
+  ref입니다.
+
+export const Highlight = ({ children, color }) => (
+  <span style={{ backgroundColor: color, padding: '2px 5px', borderRadius: '5px' }}>
+    {children}
+  </span>
+);
+
+export const PropsHighlight = ({ children }) => (
+  <Highlight color="rgb(243 244 246)">{children}</Highlight>
+);
