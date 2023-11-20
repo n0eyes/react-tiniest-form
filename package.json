@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/n0eyes/react-tiniest-form/issues"
   },
-  "homepage": "https://github.com/n0eyes/react-tiniest-form#readme",
+  "homepage": "https://n0eyes.github.io/react-tiniest-form",
   "license": "MIT",
   "workspaces": [
     "website"
