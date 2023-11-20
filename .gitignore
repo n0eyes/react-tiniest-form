@@ -3,7 +3,6 @@ node_modules
 
 dist
 
-.yarn/releases
-yarn.lock
-
 .vscode
+
+*.log
