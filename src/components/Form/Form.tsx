@@ -73,7 +73,7 @@ const Field = <T extends 'input' | 'select' = 'input'>(props: PolymorphicProps<T
       if (!(instance instanceof HTMLInputElement) && !(instance instanceof HTMLSelectElement))
         return;
 
-      if (instance.name !== autoTab?.to || !getFieldState(name).isValid) return;
+      if (instance.name !== autoTab?.to || !getFieldState(name)?.isValid) return;
 
       if (
         e.target instanceof HTMLInputElement &&
