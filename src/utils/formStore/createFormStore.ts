@@ -13,6 +13,7 @@ type FieldInfo = {
   watching: boolean;
   validations: Validation[];
   isValid: boolean;
+  /**@todo HTMLInputElement | HTMLSelectElement */
   ref: HTMLElement | null;
 };
 
@@ -74,7 +75,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
   };
 
   const getFieldInfo = (name: Name) => {
-    return store[name];
+    return store[name] ? store[name] : undefined;
   };
 
   const getFieldValue = (name: Name) => {

@@ -178,12 +178,12 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
 
       /**@todo schema check */
       const isAllValid = Object.keys(invariantOf(formFields)).every(name => {
-        const { ref } = getFieldInfo(name);
+        const info = getFieldInfo(name);
 
         /**@todo use store errors */
         const isValid = handleValidation(name);
 
-        if (!isValid) ref?.focus();
+        if (!isValid) info?.ref?.focus();
 
         return isValid;
       });
@@ -195,9 +195,9 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
   };
 
   const getFieldState = (name: Name) => {
-    const { isValid, ref } = getFieldInfo(name);
+    const info = getFieldInfo(name);
 
-    return { isValid, ref };
+    return info ? { isValid: info.isValid, ref: info.ref } : undefined;
   };
 
   return {
