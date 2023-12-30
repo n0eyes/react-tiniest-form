@@ -155,11 +155,11 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       if (!getFieldInfo(name)?.registered) {
         const defaultValue = getFieldValue(name);
 
-      registerField(name, {
+        registerField(name, {
           value: controlledValue || defaultValue,
-        validations: options?.validations,
-        ref: instance,
-      });
+          validations: options?.validations,
+          ref: instance,
+        });
 
         instance.value = getFieldValue(name);
       }
