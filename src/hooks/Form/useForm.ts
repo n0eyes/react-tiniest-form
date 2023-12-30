@@ -125,6 +125,10 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       onBlur?(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void;
     },
   ) => {
+    const isControlledValue = options?.value !== undefined;
+
+    const controlledValue = parseToInputValue(options?.value);
+
     const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const {
         target: { value },
@@ -148,14 +152,17 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
     const ref: RefCallback<HTMLInputElement | HTMLSelectElement> = instance => {
       if (!instance) return;
 
-      /**@todo need? */
-      instance.value = getFieldValue(name);
+      if (!getFieldInfo(name)?.registered) {
+        const defaultValue = getFieldValue(name);
 
       registerField(name, {
-        value: parseToInputValue(options?.value),
+          value: controlledValue || defaultValue,
         validations: options?.validations,
         ref: instance,
       });
+
+        instance.value = getFieldValue(name);
+      }
     };
 
     return {
@@ -163,6 +170,7 @@ const useForm = <DefaultValues extends FormFields>(options?: UseFormOptions<Defa
       onChange,
       onBlur,
       ref,
+      ...(isControlledValue ? { value: controlledValue } : {}),
     };
   };
 

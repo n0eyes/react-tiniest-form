@@ -61,7 +61,7 @@ const createFormsStore = <DefaultValues extends FormFields>(
     store[name] = {
       ...store[name],
       ...options,
-      value: store[name]?.registered ? store[name]?.value : parseToInputValue(options?.value),
+      value: parseToInputValue(options?.value),
       registered: true,
     };
   };
