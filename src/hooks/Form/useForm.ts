@@ -28,7 +28,7 @@ const useFormStore = <DefaultValues extends FormFields = FormFields>(
   type FormErrors = Errors<DefaultValues>;
   type Name = FieldName<DefaultValues>;
 
-  const formStore = useRef(createFormsStore<DefaultValues>(options?.defaultValues)).current;
+  const formStore = useRef(createFormsStore<DefaultValues>(options)).current;
 
   const [snapshot, setSnapshot] = useState<FormStore>(formStore.store);
 
